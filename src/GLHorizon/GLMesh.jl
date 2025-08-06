@@ -4,9 +4,9 @@ export GLMeshData, GLMesh
 export glCreateMesh, DrawMesh, AddAttribute
 export DEFAULT_VERT, DEFAULT_FRAG, DEFAULT_FRAG2
 
-const DEFAULT_FRAG = "E:\\Cours et epreuve\\1ere\\Cruise\\src\\Render\\GLHorizon\\Shaders\\Default.frag"
-const DEFAULT_FRAG2 = "E:\\Cours et epreuve\\1ere\\Cruise\\src\\Render\\GLHorizon\\Shaders\\Def2.frag"
-const DEFAULT_VERT = "E:\\Cours et epreuve\\1ere\\Cruise\\src\\Render\\GLHorizon\\Shaders\\Default.vert"
+const DEFAULT_FRAG = "Shaders\\Default.frag"
+const DEFAULT_FRAG2 = "Shaders\\Def2.frag"
+const DEFAULT_VERT = "Shaders\\Default.vert"
 
 mutable struct GLMeshData <: AbstractMeshData
 	VAO :: Vector{GLuint}
