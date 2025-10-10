@@ -72,36 +72,37 @@ function AddChildObject(parent::Object{T,N}, obj::Object{T,N}) where {T <: Objec
 	obj.id = get_nodeidx(node)
 end
 
-function RenderViewport(r::AbstractRenderer,v::HViewport)
-	RenderObject(r, v.screen)
+function RenderViewport(r,v::HViewport)
 	root = get_children(get_root(v.objects))
 
-	for child in children
-		RenderObjects(child[];parent=v.screen)
+	for child in root
+		RenderObjects(r,child,nothing,1)
 	end
+	RenderObject(r, v.screen)
 end
 
-function RenderObjects(r::AbstractRenderer,node::Node{Object2D}, parent=nothing;limit_x=640, limit_y=480)
+function RenderObjects(r,node::Node{<:Object2D}, parent=nothing, depth=0;limit_x=640, limit_y=480)
 	obj = node[]
 	pos = obj.transform.position
-	size = obj.rect.size
+	size = obj.rect.dimensions
 
-	culling_cond_x = (0 <= pos.x + size.x && pos.x <= limit_x)
-	culling_cond_y = (0 <= pos.y + size.y && pos.y <= limit_y)
+	culling_cond_x = true#(0 <= pos.x + size.x && pos.x <= limit_x)
+	culling_cond_y = true#(0 <= pos.y + size.y && pos.y <= limit_y)
 
 	if culling_cond_x && culling_cond_y
 		children = get_children(node)
 		for child in children
-			RenderObjects(r,child,obj;limit_x=limit_x,limit_y=limit_y)
+			RenderObjects(r,child,obj,depth+1;limit_x=limit_x,limit_y=limit_y)
 		end
 	end
 
 	RenderObject(r, obj, parent)
 end
 
-function DestroyViewport(r::AbstractRenderer, v::HViewport)
+function DestroyViewport(r, v::HViewport)
 	DestroyObject(r,v.screen)
 	for obj in v.objects.objects
 		DestroyObject(r,obj[])
 	end
 end
+

@@ -60,8 +60,8 @@ To create a new action, use `@commandaction`
 """
 abstract type CommandAction end
 
-const BITBLOCK_SIZE = 32
-const BITBLOCK_MASK = (1 << BITBLOCK_SIZE) - 1
+const BITBLOCK_SIZE = UInt128(32)
+const BITBLOCK_MASK = (UInt128(1) << BITBLOCK_SIZE) - UInt128(1)
 const COMMAND_ACTIONS = Type{<:CommandAction}[]
 
 """
@@ -135,9 +135,9 @@ Create a new command for the renderer.
 - `cid`: The id of the caller object, `0` means no object is calling.
 """
 struct RenderCommand{T}
-	target::Int
-	priority::Int
-	caller::Int
+	target::UInt128
+	priority::UInt128
+	caller::UInt128
 	commands::Vector{T}
 
 	## Constructors
@@ -230,7 +230,7 @@ end
 This will add the render command `r` to it's correct set in the command buffer `cb`
 """
 function add_command!(cb::CommandBuffer,target,priority,caller, r::T;pass=:render) where T <: CommandAction
-    key = encode_command(T,target,priority,caller)
+    key::UInt128 = encode_command(T,target,priority,caller)
     tree = cb.root.tree[pass]
     if !haskey(tree, key)
         tree[key] = RenderCommand{T}(target, priority,caller)
@@ -301,7 +301,7 @@ and groups are sorted following the traits given in `by`.
 """
 function sorted_command_groups(cb::CommandBuffer; by = default_key, pass=:render)
     groups = collect(cb.root.tree[pass])
-    sort!(groups, by = x -> by(x[1]))
+    sort!(groups; by = x -> by(x[1]))
     return groups
 end
 sorted_command_bypriority(cb::CommandBuffer;pass=:render) = sorted_command_groups(cb; by=get_cmd_priority, pass=pass)
@@ -343,11 +343,11 @@ end
 
 get_commandid(T::Type{<:CommandAction}) = error("get_commandid not defined for command type $T")
 encode_command(c::RenderCommand{T}) where T <: CommandAction = (c.target << (BITBLOCK_SIZE*3)) |
-	(c.priority << (BITBLOCK_SIZE*2)) |
+	(c.priority << UInt128(BITBLOCK_SIZE*2)) |
 	(c.caller << BITBLOCK_SIZE) |
 	get_commandid(T)
-encode_command(::Type{T},target, priority, caller) where T <: CommandAction = (target << (BITBLOCK_SIZE*3)) |
-	(priority << (BITBLOCK_SIZE*2)) |
+encode_command(::Type{T},target, priority, caller) where T <: CommandAction = (UInt128(target) << (BITBLOCK_SIZE*3)) |
+	(UInt128(priority) << UInt128(BITBLOCK_SIZE*2)) |
 	(caller << BITBLOCK_SIZE) |
 	get_commandid(T)
 

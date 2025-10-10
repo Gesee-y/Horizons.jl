@@ -53,7 +53,14 @@ const Object3D{T} = Object{T,3}
 Generic function to draw an object.
 Should be overloaded for custom rendere.
 """
-RenderObject(b::AbstractRenderer, obj::Object, parent=nothing) = nothing
+RenderObject(b, obj::Object, parent=nothing, depth=0) = begin
+    cb = get_commandbuffer(b)
+
+    !can_target(parent) && return
+    screen = get_texture(b.viewport.screen)
+    cmd = DrawTexture2DCmd(obj.rect, obj.transform.angle, false)
+    add_command!(cb, isnothing(parent) ? get_id(screen) : get_id(get_texture(parent)), depth, get_id(get_texture(obj)), cmd)
+end
 
 """
     DestroyObject(r::AbstractRenderer,obj::Object)

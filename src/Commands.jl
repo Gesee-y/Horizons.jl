@@ -32,6 +32,11 @@ end
 	filled::Bool
 end
 
+@commandaction DrawTexture2DCmd begin
+	rect::Rect2Df
+	angle::Float32
+	flip::Bool
+end
 
 function ClearScreen(ren::HRenderer, target, col, priority=99)
 	cb = get_commandbuffer(ren)
@@ -79,11 +84,20 @@ function DrawRect2D(ren::HRenderer, color, rect, filled=true,priority=0; pass=:r
 	add_command!(cb,get_id(target),priority,0, action;pass=pass)
 end
 
-DrawCircle2D(ren::HRenderer, color,center,radius;filled=false) = DrawCircle2D(ren, 
-	get_texture(ren.viewport.screen), color, center, radius; filled=filled, pass=:render)
-function DrawCircle2D(ren::HRenderer,target,color, center, radius,priority=0; filled::Bool=false, pass=:render)
+DrawCircle2D(ren::HRenderer, color,center,radius;filled=false,priority=0,pass=:render) = DrawCircle2D(ren, 
+	get_texture(ren.viewport.screen), color, center, radius; priority=priority, filled=filled, pass=pass)
+function DrawCircle2D(ren::HRenderer,target,color, center, radius; filled::Bool=false,priority=0, pass=:render)
 	cb = get_commandbuffer(ren)
 	action = DrawCircle2DCmd(color, center, radius, filled)
 
 	add_command!(cb,get_id(target),priority,0, action;pass=pass) 
+end
+
+DrawTexture2D(ren::HRenderer, rect, angle=0, flip=false,priority=0;pass=:render) = DrawTexture2D(ren, 
+	get_texture(ren.viewport.screen), rect, angle, flip; pass=pass)
+function DrawTexture2D(ren::HRenderer, target::AbstractResource, rect, angle=0, flip=false,priority=0;pass=:render)
+	cb = get_commandbuffer(ren)
+	action = DrawTexture2DCmd(rect, angle, flip)
+
+	add_command!(cb,get_id(target),priority,0, action;pass=pass)
 end
