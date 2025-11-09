@@ -1,4 +1,4 @@
-# Horizons.jl — A 2D/3D Game Rendering Engine for Julia
+# Horizons.jl: A 2D/3D Game Rendering Engine for Julia
 
 While several rendering libraries exist in the Julia ecosystem, none are designed with **game rendering** in mind.
 
@@ -25,7 +25,7 @@ julia> ]add https://github.com/Gesee-y/Horizons.jl
 * **Multi-Backend**:
 
   * **SDL** (software, CPU shaders)
-  * **WGPU** (in progress)
+  * **OpenGL** (in progress)
 
 ### Scene & Drawing
 
@@ -35,7 +35,7 @@ julia> ]add https://github.com/Gesee-y/Horizons.jl
 
 ### Shaders
 
-* **Cross-Backend Shader System**: Write shaders once and run them on any backend — even on CPU for SDL.
+* **Cross-Backend Shader System**: Write shaders once and run them on any backend, even on CPU for SDL.
 * **Custom Shader Support**: Hook into the pipeline to define your own rendering effects.
 
 ---
