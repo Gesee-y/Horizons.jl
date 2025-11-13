@@ -25,17 +25,10 @@ julia> ]add https://github.com/Gesee-y/Horizons.jl
 * **Multi-Backend**:
 
   * **SDL** (software, CPU shaders)
-  * **OpenGL** (in progress)
-
-### Scene & Drawing
-
-* **Drawable Object Hierarchy**: Each object can be a child of another, enabling grouped transforms and hierarchical updates.
-* **Automatic Culling**: Offscreen objects are ignored automatically to save performance.
-* **2D/3D Support**: Unified pipeline for both 2D sprites and 3D meshes.
+  * **OpenGL** (in progress)
 
 ### Shaders
-
-* **Cross-Backend Shader System**: Write shaders once and run them on any backend, even on CPU for SDL.
+
 * **Custom Shader Support**: Hook into the pipeline to define your own rendering effects.
 
 ---
