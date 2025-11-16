@@ -7,18 +7,16 @@
 
 module Horizons
 
-using ..LibSDL2
-using ..ModernGL
-using ..Crates
+using AssetCrates
 
 export AbstractRenderer
 export HORIZON_BACKEND_INITED, HORIZON_BACKEND_DESTROYED
 export HORIZON_ERROR, HORIZON_WARNING, HORIZON_INFO
 export InitBackend, UpdateRender, DestroyBackend
 
-using ..MathLib
-using ..Notifyers
-using ..NodeTree
+using GDMathLib
+using EventNotifiers
+using NodeTree
 
 const HDict{N,M} = NodeTree.SimpleDict{N,M}
 
@@ -116,5 +114,4 @@ new backend.
 """
 DestroyBackend(backend) = (HORIZON_BACKEND_DESTROYED.emit = backend)
 
-include(joinpath("SDLHorizon","SDLH.jl"))
 end #module
