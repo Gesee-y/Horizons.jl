@@ -7,8 +7,6 @@
 
 module Horizons
 
-using AssetCrates
-
 export AbstractRenderer
 export HORIZON_BACKEND_INITED, HORIZON_BACKEND_DESTROYED
 export HORIZON_ERROR, HORIZON_WARNING, HORIZON_INFO

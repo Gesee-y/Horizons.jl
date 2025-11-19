@@ -1,0 +1,20 @@
+# This file is machine-generated - editing it directly is not advised
+
+julia_version = "1.10.5"
+manifest_format = "2.0"
+project_hash = "ef66c44645ba0f53dff9043c8620df2c6f00e99d"
+
+[[deps.EventNotifiers]]
+git-tree-sha1 = "e97e476f17d72f154bf4a1867c386dfac8c0bd7e"
+uuid = "de92ec2b-fb1f-40f8-8e84-3094df8dc533"
+version = "1.0.1"
+
+[[deps.GDMathLib]]
+git-tree-sha1 = "3448a69c1e72b5bac0bb1c44512aad23df4de25b"
+uuid = "ed54f85f-91e8-4912-9e4a-a43af611f8a9"
+version = "1.2.0"
+
+[[deps.NodeTree]]
+git-tree-sha1 = "4c2fb07056ec6b0f2504ff33627f52680c63cf78"
+uuid = "2904b71e-4df0-4a82-a724-4bbee9184de7"
+version = "1.0.0"

@@ -1,0 +1,15 @@
+name = "Horizons"
+uuid = "d359ef98-a7e3-42d2-87cb-a7a1f294c746"
+authors = ["Talom Lael <gesee37@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+EventNotifiers = "de92ec2b-fb1f-40f8-8e84-3094df8dc533"
+GDMathLib = "ed54f85f-91e8-4912-9e4a-a43af611f8a9"
+NodeTree = "2904b71e-4df0-4a82-a724-4bbee9184de7"
+
+[compat]
+EventNotifiers = "1.0"
+GDMathLib = "1.2"
+NodeTree = "1.0"
+julia = "1.9"
