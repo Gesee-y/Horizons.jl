@@ -25,20 +25,17 @@ julia> ]add https://github.com/Gesee-y/Horizons.jl
 * **Multi-Backend**:
 
   * **SDL** (software, CPU shaders)
-  * **OpenGL** (in progress)
+  * **OpenGL** (in progress)
+
 
 ### Shaders
-
+
+
 * **Custom Shader Support**: Hook into the pipeline to define your own rendering effects.
-
----
-
-## Example
-
-See the [`examples/`](https://github.com/Gesee-y/Horizons.jl/tree/main/examples) folder for more.
 
 ---
 
 ## License
 
 This package is licensed under the MIT License.
+
