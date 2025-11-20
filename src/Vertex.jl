@@ -105,7 +105,7 @@ a new renderable mesh
 mutable struct Mesh{T<:AbstractMeshData}
 	vertex :: Vector{Vertex}
 	indices :: Vector{UInt32}
-	texture :: Vector{Any} # Feature not available yet
+	texture :: Vector{Int} # texture id
 	visible :: Bool
 	tranform :: AbstractTranformation
 	data :: AbstractMeshData
@@ -153,7 +153,7 @@ This function will generate a polygon mesh of type `T` at the position `pos` whi
 any container that can be indexed and should have 3 elements. `size` is the size of the
 polygon and `side` is the number of side of the polygon.
 """
-Poly2D(T::Type{<:AbstractMeshData},size::Real,@nospecialize(pos),side::Int=4,data=NoMeshData()) = Poly2D(T,size,Vec3(pos),side,data)
+Poly2D(T::Type{<:AbstractMeshData},size::Real,@nospecialize(pos),side::Int=4,data=NoMeshData()) = Poly2D(T,size,Vec3(pos...),side,data)
 function Poly2D(T::Type{<:AbstractMeshData},size::Real,center::Vec3,side::Int=4,data=NoMeshData())
 
 	# We set up the vertices of the primitives
@@ -328,3 +328,4 @@ end
 
 _get_attribute(mesh::Mesh) = getfield(mesh,:attribute)
 _get_data(m::Mesh) = getfield(m,:data)
+to_tex_coord(T, v) = v

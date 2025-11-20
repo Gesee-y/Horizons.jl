@@ -2,8 +2,8 @@
 ################################################## COMMAND BUFFER #####################################################
 #######################################################################################################################
 
-export CommandBuffer, CommandAction, RenderCommand, CommandQuery
-export add_command!, remove_command!, remove_all_command!
+export CommandBuffer, CommandAction, RenderCommand, CommandQuery, @commandaction
+export add_command!, remove_command!, remove_all_command!, add_pass, pass_order
 
 #=
 
@@ -203,7 +203,20 @@ macro commandaction(struct_name, block)
 
     __module__.eval(quote
     	    push!(COMMAND_ACTIONS, $struct_name)
-			Horizons.get_commandid(::Type{$struct_name}) = $l + 1
+			CRHorizons.get_commandid(::Type{$struct_name}) = $l + 1
+        end
+    )
+end
+macro commandaction(struct_name)
+    l = length(COMMAND_ACTIONS)
+
+	# Our struct expression
+	struct_ex = Expr(:struct, false, :($struct_name <: CommandAction), quote end)
+	__module__.eval(struct_ex)
+
+    __module__.eval(quote
+    	    push!(COMMAND_ACTIONS, $struct_name)
+			CRHorizons.get_commandid(::Type{$struct_name}) = $l + 1
         end
     )
 end
@@ -254,9 +267,10 @@ remove_command!(cb::CommandBuffer, r::RenderCommand;pass=:render) = delete!(cb.r
 
 Return an iterator of commands in the CommandBuffer `cb` matching the given `query`.
 """
-function commands_iterator(cb::CommandBuffer, query::CommandQuery)
+function commands_iterator(cb::CommandBuffer, query::CommandQuery;pass=:render)
 	results = RenderCommand[]
-	for (k, v) in cb.root.tree
+	tree = cb.root.tree[pass]
+	for (k, v) in tree
 		if (k & query.mask) == query.ref
 			push!(results, v)
 		end
@@ -267,9 +281,10 @@ end
 
 extract_field(key::UInt128, offset) = (key >> (offset * BITBLOCK_SIZE)) & BITBLOCK_MASK 
 
-function field_iterator(cb::CommandBuffer, offset)
+function field_iterator(cb::CommandBuffer, offset;pass=:render)
     result = UInt32[]
-    for key in keys(cb.root.tree)
+    tree = cb.root.tree[pass]
+    for key in keys(tree)
         push!(result, extract_field(key, offset))
     end
     return unique!(result)
@@ -367,7 +382,7 @@ get_cmd_commandid(v::UInt128) = v & BITBLOCK_MASK
 get_command_fromid(i::Int) = COMMAND_ACTIONS[i]
 
 pass_order(ren) = (:render, :postprocess)
-add_pass(cb::CommandBuffer, name::String) = (cb.root.tree[name] = Dict{UInt128, RenderCommand}())
+add_pass(cb::CommandBuffer, name::String) = (cb.root.tree[Symbol(name)] = Dict{UInt128, RenderCommand}())
 
 fast_haskey(dict::Dict, key) = begin
     hsh = hash(key)::UInt

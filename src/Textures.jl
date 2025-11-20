@@ -41,7 +41,7 @@ struct Color8
 
 	Color8(r,g,b,a) = new(floor(r),floor(g),floor(b),floor(a))
 	Color8(col::Tuple) = new(col[1],col[2],col[3],col[4])
-	Color8(arr::Vector) = new(arr[1], arr[2], arr[3], arr[4])
+	Color8(arr::AbstractVector) = new(arr[1], arr[2], arr[3], arr[4])
 end
 
 struct Color
@@ -54,7 +54,7 @@ struct Color
 
 	Color(r,g,b,a) = new(r,g,b,a)
 	Color(col::Tuple) = new(col[1],col[2],col[3],col[4])
-	Color(arr::Vector) = new(arr[1], arr[2], arr[3], arr[4])
+	Color(arr::AbstractVector) = new(arr[1], arr[2], arr[3], arr[4])
 end
 
 Base.length(::Color8) = 4

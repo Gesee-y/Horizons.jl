@@ -12,7 +12,8 @@ export HORIZON_BACKEND_INITED, HORIZON_BACKEND_DESTROYED
 export HORIZON_ERROR, HORIZON_WARNING, HORIZON_INFO
 export InitBackend, UpdateRender, DestroyBackend
 
-using GDMathLib
+using Reexport
+@reexport using GDMathLib
 using EventNotifiers
 using NodeTree
 

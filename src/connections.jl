@@ -1,6 +1,9 @@
 ## This script will create the necessary to expressed connection between Vertex
 ###############################################################################
 
+export AbstractConnection
+export Line, Tri, Face, to_array
+
 abstract type AbstractConnection end
 
 ## We first have the line
