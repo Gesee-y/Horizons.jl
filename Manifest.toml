@@ -2,7 +2,7 @@
 
 julia_version = "1.10.5"
 manifest_format = "2.0"
-project_hash = "ef66c44645ba0f53dff9043c8620df2c6f00e99d"
+project_hash = "242a1cd79891365ef7c31a02b2c44f9edd7166e6"
 
 [[deps.EventNotifiers]]
 git-tree-sha1 = "e97e476f17d72f154bf4a1867c386dfac8c0bd7e"
@@ -18,3 +18,8 @@ version = "1.2.0"
 git-tree-sha1 = "4c2fb07056ec6b0f2504ff33627f52680c63cf78"
 uuid = "2904b71e-4df0-4a82-a724-4bbee9184de7"
 version = "1.0.0"
+
+[[deps.Reexport]]
+git-tree-sha1 = "45e428421666073eab6f2da5c9d310d99bb12f9b"
+uuid = "189a3867-3050-52da-a836-e630ba90ab69"
+version = "1.2.2"
