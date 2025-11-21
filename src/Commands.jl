@@ -61,12 +61,12 @@ end
 DrawPoint2D(ren::HRenderer, color, pos,priority=0; pass=:render) = DrawPoint2D(ren, get_texture(ren.viewport.screen),
 	color, pos, priority;pass=pass)
 
-function DrawLine2D(ren::HRenderer, target, color, s, e,priority=0; pass=:render)
+function DrawLine2D(ren::HRenderer, target::Texture, color::iRGBA, s, e,priority=0; pass=:render)
 	cb = get_commandbuffer(ren)
 	action = DrawLine2DCmd(color, s,e)
 	add_command!(cb,get_id(target),priority,0, action;pass=pass)
 end
-function DrawLine2D(ren::HRenderer, color, s, e,priority=0; pass=:render)
+function DrawLine2D(ren::HRenderer, color::iRGBA, s, e,priority=0; pass=:render)
 	cb = get_commandbuffer(ren)
 	target = get_texture(ren.viewport.screen)
 	action = DrawLine2DCmd(color, s,e)
