@@ -10,7 +10,7 @@ module CRHorizons
 export AbstractRenderer
 export HORIZON_BACKEND_INITED, HORIZON_BACKEND_DESTROYED
 export HORIZON_ERROR, HORIZON_WARNING, HORIZON_INFO
-export InitBackend, UpdateRender, DestroyBackend, ClearTexture, ClearViewport
+export InitBackend, UpdateRender, DestroyBackend, ClearTexture, ClearViewport, SetDrawColor
 
 using Reexport
 @reexport using GDMathLib
@@ -95,6 +95,7 @@ function UpdateRender(backend::HRenderer)
 	clear!(get_commandbuffer(backend))
 end
 
+SetDrawColor(::HRenderer, col) = error("Method not defined for this renderer")
 ClearTexture(::Texture) = error("Method not defined for this Texture type")
 ClearViewport(::HViewport) = error("Method not defined for this renderer")
 ClearScreen(::HRenderer) = error("Method not defined for this renderer.")
