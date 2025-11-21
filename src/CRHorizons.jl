@@ -10,7 +10,7 @@ module CRHorizons
 export AbstractRenderer
 export HORIZON_BACKEND_INITED, HORIZON_BACKEND_DESTROYED
 export HORIZON_ERROR, HORIZON_WARNING, HORIZON_INFO
-export InitBackend, UpdateRender, DestroyBackend
+export InitBackend, UpdateRender, DestroyBackend, ClearTexture, ClearViewport
 
 using Reexport
 @reexport using GDMathLib
@@ -89,11 +89,15 @@ If you are going to create a new backend, you should create a dispatch of this o
 your backend.
 """
 function UpdateRender(backend::HRenderer)
-	RenderViewport(backend, backend.viewport)
 	ExecuteCommands(backend)
+	RenderViewport(backend, backend.viewport)
 	PresentRender(backend)
 	clear!(get_commandbuffer(backend))
 end
+
+ClearTexture(::Texture) = error("Method not defined for this Texture type")
+ClearViewport(::HViewport) = error("Method not defined for this renderer")
+ClearScreen(::HRenderer) = error("Method not defined for this renderer.")
 
 """
     PresentRender(::HRenderer)

@@ -2,7 +2,8 @@
 ####################################################### VIEWPORT ######################################################
 #######################################################################################################################
 
-export AddObject, AddChildObject
+export AddObject, AddChildObject, HViewport, CreateViewport, SetViewportSize, SwapScreen, SetViewportPosition
+export SwapViewport
 
 ######################################################### CORE ########################################################
 
@@ -28,7 +29,7 @@ When Creating your own style of viewport, you should overload this function.
 CreateViewport(r::AbstractRenderer,args...) = nothing
 
 """
-	SetViewportPosition(r::SDLRender,x::Int,y::Int)
+	SetViewportPosition(r::HRenderer,x::Int,y::Int)
 
 Set the position of the current viewport.
 """
@@ -38,7 +39,7 @@ SetViewportPosition(v::HViewport,x::Int,y::Int) = begin
 end
 
 """
-	SetViewportSize(r::SDLRender,w::Int,h::Int)
+	SetViewportSize(r::HRenderer,w::Int,h::Int)
 
 Set the size of the current viewport.
 """
@@ -48,7 +49,7 @@ SetViewportSize(v::HViewport,w::Int,h::Int) = begin
 end
 
 """
-	SwapScreen(r::SDLRender,v::SDLViewport)
+	SwapScreen(r::HRenderer,v::SDLViewport)
 
 Change the screen of a viewport 
 """
@@ -73,11 +74,11 @@ function AddChildObject(parent::Object{T,N}, obj::Object{T,N}) where {T <: Objec
 end
 
 function RenderViewport(r,v::HViewport)
-	root = get_children(get_root(v.objects))
+	#root = get_children(get_root(v.objects))
 
-	for child in root
-		RenderObjects(r,child,v.screen,1)
-	end
+	#for child in root
+	#	RenderObjects(r,child,v.screen,1)
+	#end
 	RenderObject(r, v.screen; viewport=false)
 end
 

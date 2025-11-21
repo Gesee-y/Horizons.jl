@@ -4,7 +4,7 @@
 
 export ObjectData
 export Object, Object2D, Object3D
-export RenderObject, DestroyObject
+export RenderObject, DestroyObject, get_texture
 
 ########################################################## CORE #######################################################
 
@@ -69,3 +69,5 @@ Generic function to delete an object
 Should be oveloaded when you will create your renderer
 """
 DestroyObject(r::AbstractRenderer,obj::Object) = nothing
+
+get_texture(obj::Object) = error("get_texture not implemented for this object type")

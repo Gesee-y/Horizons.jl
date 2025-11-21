@@ -2,7 +2,8 @@
 ####################################################### RENDERER ######################################################
 #######################################################################################################################
 
-export HRenderer, RendererData, ResourcePool
+export HRenderer, RendererData, ResourcePool, HRenderer2D, HRenderer3D, get_resourcefromid, get_commandbuffer
+export get_name, get_resourcenames, get_currenttarget, register_resource, get_resourcenamefromid, addtopool
 
 abstract type RendererData end
 
@@ -90,4 +91,59 @@ function addtopool!(pool::ResourcePool{T}, res::T) where T
 	pool.range = 1:id
     
     return
+end
+
+"""
+	ClearViewport(ren::SDLRender,v::Viewport)
+
+This function should be use to clear a viewport.
+"""
+function ClearViewport(ren::HRenderer)
+	v = ren.viewport
+	# We just clear the screen of the viewport
+	isdefined(v, :screen) && ClearTexture(ren,get_texture(v.screen))
+end
+
+"""
+	SetViewportPosition(r::HRenderer,x::Int,y::Int)
+
+Set the position of the current viewport.
+"""
+SetViewportPosition(r::HRenderer,x::Int,y::Int) = begin
+	v = r.viewport
+
+	if !isdefined(v, :screen)
+		return
+	else
+		get_texture(v.screen).rect.x = x
+		get_texture(v.screen).rect.y = y
+	end
+end
+
+"""
+	SetViewportSize(r::HRenderer,w::Int,h::Int)
+
+Set the size of the current viewport.
+"""
+SetViewportSize(r::HRenderer,w::Int,h::Int) = begin
+	v = r.viewport
+
+	if !isdefined(v, :screen)
+		return
+	else
+		get_texture(v.screen).rect.w = w
+		get_texture(v.screen).rect.h = h
+	end
+end
+
+"""
+	SwapViewport(r::HRenderer,v::HViewport)
+
+Change the viewport of the HRenderer `r` to `v`. It returns the old viewport of `r`.
+"""
+function SwapViewport(r::HRenderer,v::HViewport)
+	old_v = r.viewport[]
+	r.viewport[] = v
+
+	return old_v
 end

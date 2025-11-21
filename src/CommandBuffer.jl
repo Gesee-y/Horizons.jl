@@ -202,7 +202,7 @@ macro commandaction(struct_name, block)
 	__module__.eval(struct_ex)
 
     __module__.eval(quote
-    	    push!(COMMAND_ACTIONS, $struct_name)
+    	    push!(CRHorizons.COMMAND_ACTIONS, $struct_name)
 			CRHorizons.get_commandid(::Type{$struct_name}) = $l + 1
         end
     )
@@ -215,7 +215,7 @@ macro commandaction(struct_name)
 	__module__.eval(struct_ex)
 
     __module__.eval(quote
-    	    push!(COMMAND_ACTIONS, $struct_name)
+    	    push!(CRHorizons.COMMAND_ACTIONS, $struct_name)
 			CRHorizons.get_commandid(::Type{$struct_name}) = $l + 1
         end
     )
@@ -236,6 +236,8 @@ function ExecuteCommands(ren)
 		end
 	end
 end
+
+execute_command(args...) = error("execute_command not defined for this set of arguments")
 
 """
     add_command!(cb::CommandBuffer, r::RenderCommand{T}) where T <: CommandAction

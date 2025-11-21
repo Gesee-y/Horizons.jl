@@ -3,6 +3,7 @@
 #######################################################################################################################
 
 export DrawPoint2D, DrawLine2D, DrawRect2D, DrawCircle2D, ClearScreen, DrawTexture2D
+export ClearScreenCmd, DrawPoint2DCmd, DrawLine2DCmd, DrawRect2DCmd, DrawTexture2DCmd, DrawCircle2DCmd
 
 @commandaction ClearScreenCmd begin
 	color::iRGBA
